@@ -32,14 +32,19 @@ void draw() {
     rect3.moveRect();
     thirCreated = true;
   }
-  if (secCreated) {
+  if (secCreated) { //This one is not running? no red rectangle?
+    fill (255,0,0);
     rect2.drawRect();
     rect2.moveRect();
     text("Text", 40, 40);
   }
   if (thirCreated) {
+    fill (0,255,0);
     rect3.drawRect();
     rect3.moveRect();
     text("Text2", 80, 80);
   }
+  strokeWeight(4);
+  line(500,0,500,1500);
+  line(1000,0,1000,1500);
 }
