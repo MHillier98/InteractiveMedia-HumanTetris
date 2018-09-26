@@ -1,49 +1,81 @@
-  import processing.sound.*;
+import processing.sound.*;
   
-  SoundFile correctSnd;
-  SoundFile incorrectSnd;
-  
-  int xbox = 50;
-  int ybox =50;
+SoundFile correctSnd;
+SoundFile incorrectSnd;
+
+int xbox = 50;
+int ybox =50;
    
-  int now = 0;
-  int delay = 10000;
-  int val;
-  char keyVal;
-  int score = 0;
-  boolean isCorrect = false;
+int now = 0;
+int delay = 10000;
+int val;
+char keyVal;
+int score = 0;
+boolean isCorrect = false;
+boolean genRandomVal = true;
+int t;
+int ten =10;
   
 void setup(){
   size (800,800);
   correctSnd = new SoundFile( this, "NFF-got-mail-b.wav");
+  // royalty free music found from: https://www.noiseforfun.com/2012-sound-effects/got-mail-b/
   incorrectSnd = new SoundFile( this, "NFF-no-go.wav");
+  // royalty free music found from: https://www.noiseforfun.com/2012-sound-effects/no-go/
   now = millis();
   drawbox();
 }
 
 void draw(){
-  textSize(32);
-  text("Score", 10,30);
-  text(score, 10, 60);
-  println(score);
-  
-  text("time", width-100, 30);
-  text(int((millis() - now)/1000), width-100, 60);
-  println(int((millis() - now)/1000));
-  
+  drawbox();  
+  timer();
+   
   if (millis() >= (now+delay)){
-     drawbox();
-     score = score - 10;
+     genRandomVal = true;  // reset flag get random shape
+     score = score - ten;
+     
      if (score <0) score = 0;
      now = millis();
      incorrectSnd.play();
   }
 
 }
+void timer(){
+  textSize(32);
+  text("Score", 10,30);
+  text(score, 10, 60);
+  println(score);
+  
+  t = ten-int((millis()-now)/1000);
+  if (t <= 0){
+     t = ten;
+  }  
+    
+  println(t);
+  text("time", width-100, 30);
+  text(t, width-100, 65);
+}
+
+void keyPressed(){
+   if (key == keyVal) {
+      genRandomVal = true;  // reset flag get random shape
+      correctSnd.play();
+      score = score + ten - int((millis() - now)/1000);
+      drawbox();
+      isCorrect = true;
+      now = millis();
+      
+   } else {
+     isCorrect = false;
+   }
+}
 
 void drawbox(){
   background (255,200,200);
-  val = int(random(3.5));
+  if (genRandomVal) {
+    val = int(random(5.9));
+    genRandomVal = false;
+  }
   switch(val){
    case 1 : 
      keyVal = '1';
@@ -57,6 +89,14 @@ void drawbox(){
      keyVal = '3';
      box3();
      break;
+   case 4:
+     keyVal = '4';
+     box4();
+     break;
+   case 5:
+     keyVal = '5';
+     box5();
+     break;
    default :
      keyVal = '1';
      box1();
@@ -68,15 +108,14 @@ void box1(){
  fill(255);
  rect(width/2, height/2, xbox, ybox);
  //correct.play();    
- 
 }
 
 void box2(){
  fill(255);
  rect(width/2, height/2, xbox, ybox);
  rect(width/2, height/2+ybox, xbox,ybox);
- 
 }
+
 void box3(){
  fill(255);
  rect(width/2, height/2, xbox, ybox);
@@ -84,13 +123,19 @@ void box3(){
  rect(width/2-xbox, height/2+ybox, xbox,ybox);
 }
 
-void keyPressed(){
-   if (key == keyVal) {
-        correctSnd.play();
-        score = score + 10 - int((millis() - now)/1000);
-        drawbox();
-        isCorrect = true;
-   } else {
-     isCorrect = false;
-   }
+void box4(){
+ fill(255);
+ rect(width/2, height/2, xbox, ybox);
+ rect(width/2, height/2+ybox, xbox,ybox);
+ rect(width/2-xbox, height/2+ybox, xbox,ybox);
+ rect(width/2-xbox, height/2, xbox,ybox);
+}
+
+void box5(){
+ fill(255);
+ rect(width/2, height/2, xbox, ybox);
+ rect(width/2, height/2+ybox, xbox,ybox);
+ rect(width/2, height/2-ybox, xbox,ybox);
+ rect(width/2-xbox, height/2, xbox,ybox);
+ rect(width/2+xbox, height/2, xbox,ybox);
 }
