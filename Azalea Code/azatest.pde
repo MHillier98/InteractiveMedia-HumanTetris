@@ -1,5 +1,6 @@
 import processing.sound.*;
-  
+
+SoundFile sound;
 SoundFile correctSnd;
 SoundFile incorrectSnd;
 
@@ -22,8 +23,11 @@ void setup(){
   // royalty free music found from: https://www.noiseforfun.com/2012-sound-effects/got-mail-b/
   incorrectSnd = new SoundFile( this, "NFF-no-go.wav");
   // royalty free music found from: https://www.noiseforfun.com/2012-sound-effects/no-go/
+  sound = new SoundFile(this, "Puzzle-Game-3_Looping.mp3");
+  sound.play();
   now = millis();
   drawbox();
+  
 }
 
 void draw(){
