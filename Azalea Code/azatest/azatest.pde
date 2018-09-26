@@ -23,7 +23,7 @@ void setup(){
   // royalty free music found from: https://www.noiseforfun.com/2012-sound-effects/got-mail-b/
   incorrectSnd = new SoundFile( this, "NFF-no-go.wav");
   // royalty free music found from: https://www.noiseforfun.com/2012-sound-effects/no-go/
-  sound = new SoundFile(this, "Puzzle-Game-3_Looping.mp3");
+  sound = new SoundFile(this, "Puzzle-Game-3_Looping.wav");
   sound.play();
   now = millis();
   drawbox();
