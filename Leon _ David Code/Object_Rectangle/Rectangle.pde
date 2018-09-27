@@ -1,22 +1,24 @@
 class Rectangle {
-  float initalX, initialY, h, w, cX, maxSize, speed, initialH, initialW;
+  float x, y, h, w, cX, maxSize, speed, initialH, initialW, eX;
+  boolean beforeMiddle;
   Rectangle(float x, float y, float h, float w, float maxSize, float speed) {
-    this.initalX = x;
-    this.initialY = y;
+    this.x = x;
+    this.y = y;
     this.h = h;
     this.w = w;
     this.maxSize = maxSize;
     this.speed = speed;
     this.initialH = h;
     this.initialW = w;
+    beforeMiddle = true;
   }
   
   float getX() {
-    return initalX;
+    return x;
   }
   
   float getY() {
-    return initialY;
+    return y;
   }
   
   float getH() {
@@ -27,18 +29,8 @@ class Rectangle {
     return w;
   }
   
-  boolean passedMiddle() {
-    cX = width/2 - w/2;
-    if (initalX < cX) {
-      return true;
-    }
-    else {
-      return false;
-    }
-  }
-  
-  boolean passedQuart() {
-    cX = width/2 - w/2;
+  boolean passedOneThird() {
+    cX = x + w/2 ; //X coordinate of center of rect
     if (width/3 > cX) {
       return true;
     }
@@ -47,12 +39,43 @@ class Rectangle {
     }
   }
   
+  boolean passedTwoThird() {
+    cX = x + w/2; //X coordinate of center of rect
+    if (2*width/3 > cX) {
+      return true;
+    }
+    else {
+      return false;
+    }
+  }
+  
+  boolean passedMiddle() {
+    cX = x + w/2 ;
+    if (width/2 > cX) {
+      return true;
+    }
+    else {
+      return false;
+    }
+  }
+  
+  boolean atMiddle() {
+    cX = x + w/2 ;
+    if ((width/2 > cX) && beforeMiddle) {
+      beforeMiddle = false;
+      return true;
+    }
+    else {
+      return false;
+    }
+  }
+  
   void setX(float x) {
-    this.initalX = x;
+    this.x = x;
   }
   
   void setY(float y) {
-    this.initialY = y;
+    this.y = y;
   }
   
   void setH(float h) {
@@ -64,12 +87,13 @@ class Rectangle {
   }
   
   void drawRect() {
-    rect(initalX, initialY, h, w);
+    rect(x, y, h, w);
     setX(getX()-speed);
     setY(height/2 - getH()/2);
   }
   
   void moveRect() {
+    eX = x + w ; //X coordinate of top right corner of rect
     if (passedMiddle()) {
     setW(getW() - maxSize);
     setH(getH() - maxSize);
@@ -78,10 +102,11 @@ class Rectangle {
       setW(getW() + maxSize);
       setH(getH() + maxSize);
     }
-    if ((getW()+getW()) < 0) {
+    if (eX < 0) {
       setX(width);
       setW(initialW);
       setH(initialH);
+      beforeMiddle = true;
     }
   }
 }
