@@ -88,12 +88,12 @@ class Rectangle {
   
   void drawRect() {
     rect(x, y, h, w);
-    setX(getX()-speed);
-    setY(height/2 - getH()/2);
   }
   
   void moveRect() {
     eX = x + w ; //X coordinate of top right corner of rect
+    setX(getX()-speed);
+    setY(height/2 - getH()/2);
     if (passedMiddle()) {
     setW(getW() - maxSize);
     setH(getH() - maxSize);

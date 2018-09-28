@@ -1,6 +1,5 @@
 Timer timer;
-PFont endFont;
-PFont timeFont;
+PFont endFont, timeFont;
 boolean gameEnded;
 
 void setup() {
