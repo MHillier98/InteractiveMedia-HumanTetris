@@ -46,7 +46,7 @@ void draw() {
   }
   if (completed) {
     rect1.moveRect();
-    if (rect1.passedTwoThird() && !secCreated) {//Not running for some reason???
+    if (rect1.passedTwoThird() && !secCreated) {
       rect2.moveRect();
       secCreated = true;
     }
