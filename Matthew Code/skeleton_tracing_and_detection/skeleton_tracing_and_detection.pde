@@ -3,6 +3,8 @@ import kinect4WinSDK.SkeletonData;
 // Make sure to install the Kinect4WinSDK from the Processing Library Manager.
 // https://github.com/chungbwc/Kinect4WinSDK
 // http://www.magicandlove.com/blog/research/kinect-for-processing-library/
+// http://www.magicandlove.com/libraries/Kinect4WinSDK/index.html
+// https://processing.org/reference/PVector_x.html
 
 Kinect kinect;
 ArrayList <SkeletonData> bodies;
@@ -11,20 +13,82 @@ void setup()
 {
   size(640, 480);
   background(0);
-  kinect = new Kinect(this);
+  //kinect = new Kinect(this);
   smooth();
   bodies = new ArrayList<SkeletonData>();
+
+  drawRedShape();
 }
 
 void draw()
 {
   background(0);
-  image(kinect.GetMask(), 0, 0, width, height);
+  //image(kinect.GetMask(), 0, 0, width, height);
+  drawRedShape();
   for (int i=0; i<bodies.size (); i++) 
   {
-    drawSkeleton(bodies.get(i));
-    drawPosition(bodies.get(i));
+    SkeletonData skeleData = bodies.get(i);
+    drawSkeleton(skeleData);
+    drawPosition(skeleData);
+    checkPositions(skeleData);
   }
+}
+
+void checkPositions(SkeletonData _s) 
+{
+  float lowerX = 250.0; // 150 wide
+  float upperX = 400.0;
+  float lowerY = 90.0; // 300 tall
+  float upperY = 390.0;
+
+  boolean isOutOfSquare = true;
+
+skeletonPosLoop:
+  for (PVector sPV : _s.skeletonPositions)
+  {
+    boolean sPosInSquare = false;
+    float sX = sPV.x;
+    float sY = sPV.y;
+
+    if (sX >= lowerX && sX <= upperX)
+    {
+      // X coord is within the boundaries
+      if (sY >= lowerY && sY <= upperY)
+      {
+        // Y coord is within the boundaries
+        sPosInSquare = true;
+      }
+    }
+
+    if (!sPosInSquare)
+    {
+      isOutOfSquare = true;
+      break skeletonPosLoop;
+    } else
+    {
+        isOutOfSquare = false;
+    }
+  }
+
+  if (isOutOfSquare)
+  {
+    drawRedShape();
+  } else
+  {
+    drawGreenShape();
+  }
+}
+
+void drawRedShape()
+{
+  fill(244, 70, 55);
+  rect(250, 90, 150, 300);
+}
+
+void drawGreenShape()
+{
+  fill(30, 180, 110);
+  rect(250, 90, 150, 300);
 }
 
 void drawPosition(SkeletonData _s) 
