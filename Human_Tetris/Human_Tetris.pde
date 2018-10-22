@@ -145,7 +145,7 @@ void mouseClicked() {
 void checkPositions(SkeletonData _s) {
   boolean isOutOfSquare = true;
 
-  skeletonPosLoop:
+skeletonPosLoop:
   for (PVector sPV : _s.skeletonPositions) {
     boolean sPosInSquare = false;
     float sX = height/3 + sPV.x * height * 0.3;
@@ -302,7 +302,7 @@ void appearEvent(SkeletonData _s) {
   if (_s.trackingState == Kinect.NUI_SKELETON_NOT_TRACKED) {
     return;
   }
-  
+
   synchronized(bodies) {
     bodies.add(_s);
   }

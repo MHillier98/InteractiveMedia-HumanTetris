@@ -121,7 +121,7 @@ class Rectangle {
       setW(getW() + maxSize);
       setH(getH() + maxSize);
     }
-    
+
     if (eX < 0) {
       setX((width-(w/2)));
       setW(initialW);
