@@ -16,6 +16,7 @@ String currentShape = "";
 
 // Utility classes
 Timer timer;
+Timer endTimer;
 Points points;
 
 // Font
@@ -28,6 +29,10 @@ SoundFile incorrectSnd;
 
 void setup() {
   size(900, 900);
+  setupCode();
+}
+
+void setupCode() {
 
   h = 40;
   w = 40;
@@ -69,16 +74,23 @@ void draw() {
     if (gameEnded == false) {
       sound.stop();
       incorrectSnd.play();
+      endTimer = new Timer(7);
     }
 
     textFont(endFont);
     textAlign(CENTER, CENTER);
     text("That's it man!\nGame over man!\nGame over!", height/2, width/2);
     gameEnded = true;
+    println(endTimer.getTime());
+    endTimer.countDown();
+
+    if (endTimer.getTime() <= 0) {
+      setupCode();
+    }
   } else {
     timer.countDown();
     textFont(timeFont);
-    text("TIME: " + timer.getTime(), width/30, 80);
+    text("TIME: " + timer.getTime(), width/4, 80);
     text("POINTS: " + points.getScore(), width/4, height-30);
 
     fill(255, 0, 0); //Red
@@ -87,51 +99,52 @@ void draw() {
     rect2.drawRect();
     fill(0, 0, 255); //Blue
     rect3.drawRect();
-  }
 
-  // 'completed shape' aka clicked / success
-  if (completed) {
-    rect1.moveRect();
-    if (rect1.passedTwoThird() && !secCreated) {
-      rect2.moveRect();
-      secCreated = true;
-    }
-    if (rect1.passedOneThird() & !thirCreated) {
-      rect3.moveRect();
-      thirCreated = true;
-    }
-    if (secCreated) {
-      rect2.moveRect();
-      secCreated = true;
-    }
-    if (thirCreated) {
-      rect3.moveRect();
-      thirCreated = true;
-    }
-    strokeWeight(4);
-    if (rect1.atMiddle() || rect2.atMiddle() || rect3.atMiddle()) {
-      completed = false;
-    }
-  }
 
-  if (rect1.getX() > 390 && rect1.getX() < 410) {
-    currentShape = rect1.getShape();
-    //println(rect1.getX());
-    //println("currentShape 1: " + currentShape);
-  } else if (rect2.getX() > 390 && rect2.getX() < 410) {
-    currentShape = rect2.getShape();
-    //println(rect2.getX());
-    //println("currentShape 2: " + currentShape);
-  } else if (rect3.getX() > 390 && rect3.getX() < 410) {
-    currentShape = rect3.getShape();
-    //println(rect3.getX());
-    //println("currentShape 3: " + currentShape);
-  }
+    // 'completed shape' aka clicked / success
+    if (completed) {
+      rect1.moveRect();
+      if (rect1.passedTwoThird() && !secCreated) {
+        rect2.moveRect();
+        secCreated = true;
+      }
+      if (rect1.passedOneThird() & !thirCreated) {
+        rect3.moveRect();
+        thirCreated = true;
+      }
+      if (secCreated) {
+        rect2.moveRect();
+        secCreated = true;
+      }
+      if (thirCreated) {
+        rect3.moveRect();
+        thirCreated = true;
+      }
+      strokeWeight(4);
+      if (rect1.atMiddle() || rect2.atMiddle() || rect3.atMiddle()) {
+        completed = false;
+      }
+    }
 
-  for (int i = 0; i < bodies.size(); i++) {
-    SkeletonData skeleData = bodies.get(i);
-    checkPositions(skeleData);
-    drawSkeleton(skeleData);
+    if (rect1.getX() > 390 && rect1.getX() < 410) {
+      currentShape = rect1.getShape();
+      //println(rect1.getX());
+      //println("currentShape 1: " + currentShape);
+    } else if (rect2.getX() > 390 && rect2.getX() < 410) {
+      currentShape = rect2.getShape();
+      //println(rect2.getX());
+      //println("currentShape 2: " + currentShape);
+    } else if (rect3.getX() > 390 && rect3.getX() < 410) {
+      currentShape = rect3.getShape();
+      //println(rect3.getX());
+      //println("currentShape 3: " + currentShape);
+    }
+
+    for (int i = 0; i < bodies.size(); i++) {
+      SkeletonData skeleData = bodies.get(i);
+      checkPositions(skeleData);
+      drawSkeleton(skeleData);
+    }
   }
 }
 
