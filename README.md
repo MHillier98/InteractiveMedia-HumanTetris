@@ -1,9 +1,9 @@
 # UTS 31080 Interactive Media - Media Project
 The main media project for Interactive Media Spring 2018.
 Our goal was to create an interactive project to encourage physical interaction from users in a fun and engaging way.
-We set out to achieve this through creating "Human Tetris", a blend of the classic arcade game Tetris, and the gameshow Hole in the Wall. 
+We set out to achieve this through creating "Human Tetris", a blend of the classic arcade game Tetris, and the gameshow Hole in the Wall.
 
-The player must their body within the shape displayed, before the 10 second timer runs out, and keep making the differents shapes for as long as they can.
+The player must move their body into the shape displayed on-screen before a timer runs out, and must continue making the differents shapes for as long as they can.
 
 # Overview Video 
 https://www.youtube.com/watch?v=YssD6W2JPik
